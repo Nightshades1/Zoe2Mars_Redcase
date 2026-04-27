@@ -67,21 +67,15 @@
     <None Include="exports.def">
       <Filter>Fichiers sources</Filter>
     </None>
-    <None Include="cygames package (demo assets).zip">
-      <Filter>Fichiers de ressources\ModAssets</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="InfoAboutLoading.txt" />
-    <Text Include="ModAssets\steam_appid.txt">
-      <Filter>Fichiers de ressources\ModAssets</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ModAssets\Settings.ini">
       <Filter>Fichiers de ressources\ModAssets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ModAssets\arial.ttf">
+      <Filter>Fichiers de ressources\ModAssets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ModAssets\steam_appid.txt">
       <Filter>Fichiers de ressources\ModAssets</Filter>
     </CopyFileToFolders>
   </ItemGroup>

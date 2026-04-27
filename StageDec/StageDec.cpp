@@ -42,7 +42,7 @@ bool Setup_HashList()
 
 void StageDAT_Decrypt(std::string GamePath)
 {
-	std::ifstream File("C:\\Program Files (x86)\\Steam\\steamapps\\common\\ZONE OF THE ENDERS THE 2nd RUNNER MARS ANUBIS ZONE OF THE ENDERS MARS ORANGE CASE\\ZOE2\\Backup\\STAGE.DAT", std::ios::binary | std::ios::ate);
+	std::ifstream File(GamePath, std::ios::binary | std::ios::ate);
 	if (!File.is_open())
 	{
 		std::cerr << "STAGE.DAT not found, aborting ..." << std::endl;
@@ -109,28 +109,23 @@ void StageDAT_Decrypt(std::string GamePath)
 	//	}
 	//}
 	//
-	//std::ofstream pOut("STAGE.DAT", std::ios::binary);
-	//pOut.write((char*)Globals::g_STAGE_DAT.data(), Globals::g_STAGE_DAT.size());
-	for (auto& ext : ExtensionFound)
-	{
-		std::cout << std::format("{:08X}:{}", ext.first, ext.second) << std::endl;
-	}
+	std::ofstream pOut("STAGE.DAT", std::ios::binary);
+	pOut.write((char*)Globals::g_STAGE_DAT.data(), Globals::g_STAGE_DAT.size());
 }
 
 int main(int argc, char** argv)
 {
+	Setup_HashList();
 	CLI::App app("Multi-Purpose Tool for \"Zone Of The Enders The 2nd Runner\"","StageDec");
 	bool Is_Extracting = false;
 	bool Is_Building = false;
+	CLI::Option* Path = app.add_flag("-p,--path", "path to the STAGE.DAT");
 	CLI::Option* Verbose_Option = app.add_flag("-v,--verbose",Utility::Is_VerboseEnabled, "Verbose - Additional logging.");
-	CLI::Option *Extract_Option = app.add_flag("-e,--extract", Is_Extracting, "Extract all files from STAGE.DAT and reproduce the development \"stage\" folder with all sections.");
+	CLI::Option *Extract_Option = app.add_flag("-e,--extract", Is_Extracting, "Only decrypt (for now) - Extract all files from STAGE.DAT and reproduce the development \"stage\" folder with all sections.");
 	CLI::Option* Build_Option = app.add_flag("-b,--build", Is_Building, "Build a fully decrypted STAGE.DAT based on the development \"stage\" folder.");
 	Extract_Option->excludes(Build_Option);
 	Build_Option->excludes(Extract_Option);
 	CLI11_PARSE(app,argc,argv);
-
-	Setup_HashList();
-	StageDAT_Decrypt("");
 
 	return 0;
 }

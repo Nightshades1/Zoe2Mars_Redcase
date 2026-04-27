@@ -1,23 +1,15 @@
 <Solution>
   <Configurations>
     <BuildType Name="Debug" />
-    <BuildType Name="Debug_Demo" />
+    <BuildType Name="Debug(Demo)" />
     <BuildType Name="Release" />
-    <BuildType Name="Release_Demo" />
+    <BuildType Name="Release(Demo)" />
     <Platform Name="x64" />
   </Configurations>
-  <Folder Name="/Solution Items/" />
-  <Folder Name="/Solution Items/Assets/">
-    <File Path="Assets/cygames package (demo assets).zip" />
+  <Folder Name="/Assets/">
+    <File Path="Assets/cygames.zip" />
   </Folder>
-  <Project Path="StageDec/StageDec.vcxproj" Id="ce429432-14d9-4f0d-b4e6-be950f159df6">
-    <BuildType Solution="Debug_Demo|*" Project="Debug" />
-    <BuildType Solution="Debug|*" Project="Release" />
-    <BuildType Solution="Release_Demo|*" Project="Release" />
-  </Project>
+  <Project Path="StageDec/StageDec.vcxproj" Id="ce429432-14d9-4f0d-b4e6-be950f159df6" />
   <Project Path="Zoe2Mars_Mod64/Zoe2Mars_Mod64.vcxproj" Id="2660c5ef-2490-4b29-8a8a-28f0cfc7d56a" />
-  <Project Path="Zoe2Mars_ModLauncher/Zoe2Mars_ModLauncher.vcxproj" Id="e371c1f7-f347-4a10-bd1b-8370f244f4ca">
-    <BuildType Solution="Debug_Demo|*" Project="Release" />
-    <BuildType Solution="Release_Demo|*" Project="Release" />
-  </Project>
+  <Project Path="Zoe2Mars_ModLauncher/Zoe2Mars_ModLauncher.vcxproj" Id="e371c1f7-f347-4a10-bd1b-8370f244f4ca" />
 </Solution>
