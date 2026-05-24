@@ -3,13 +3,6 @@
 #include "GameOffsets.h"
 #include "Hooks.h"
 #include "GameTypes/Jehuty/Jehuty.h"
-//Very important the game read 131072 Bytes maximum per chunk for the decompression !
-/*Stage flow (Demo)
-Pass1_DecryptHeader 1A9090
-Pass2_Decrypt_TableOfContent 1A9250
-Pass3_Decrypt_DataConfig_Metadata 1A9850
-Pass4_Decrypt_Sections_And_Decompress 1A8A80
-*/
 namespace Mod
 {
 	void RemapMemory()
@@ -71,14 +64,28 @@ namespace Mod
 	void Disable_LCG_Decryption()
 	{
 #ifdef DEMO
-		Nop_Patch(GameOffsets::BaseAddress + 0x1A90D0, 21); // Pass 1 - Decrypt the Header Metadata.
-		Nop_Patch(GameOffsets::BaseAddress + 0x1A9630, 21); // Pass 2 - Decrypt the Table Of Content.
-		Nop_Patch(GameOffsets::BaseAddress + 0x1A9900, 20); // Pass 3 - Decrypt the DataConfig Metadata.
+		// Pass 1 - Decrypt the Header Metadata.
+		Nop_Patch(GameOffsets::BaseAddress + 0x1A90D0, 21);
+		// Pass 2 - Decrypt the Table Of Content.
+		Nop_Patch(GameOffsets::BaseAddress + 0x1A9630, 21);
+		// Pass 3 - Decrypt the DataConfig Metadata.
+		Nop_Patch(GameOffsets::BaseAddress + 0x1A9900, 20); 
 		Nop_Patch(GameOffsets::BaseAddress + 0x1A99D0, 20);
-		Nop_Patch(GameOffsets::BaseAddress + 0x1A8BF0, 21); // Pass 4 - Decrypt and decompress each section (compressed folder)
+		// Pass 4 - Decrypt and decompress each section (compressed folder)
+		Nop_Patch(GameOffsets::BaseAddress + 0x1A8BF0, 21); 
 		Nop_Patch(GameOffsets::BaseAddress + 0x1A8C40, 20);
 #else
-
+		// Due to Denuvo that virtualize/obfuscate,some patch may be different compared to the Demo version
+		// Pass 1 - Decrypt the Header Metadata.
+		Nop_Patch(GameOffsets::BaseAddress + 0x5454C23, 21);
+		// Pass 2 - Decrypt the Table Of Content.
+		Nop_Patch(GameOffsets::BaseAddress + 0x5454D00, 21);
+		// Pass 3 - Decrypt the DataConfig Metadata.
+		Nop_Patch(GameOffsets::BaseAddress + 0x5456780, 20);
+		Nop_Patch(GameOffsets::BaseAddress + 0x5456850, 20);
+		// Pass 4 - Decrypt and decompress each section (compressed folder)
+		Nop_Patch(GameOffsets::BaseAddress + 0x544B6D0, 21);
+		Nop_Patch(GameOffsets::BaseAddress + 0x544B720, 20);
 #endif
 	}
 }

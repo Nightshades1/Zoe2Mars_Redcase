@@ -1,21 +1,31 @@
 #pragma once
-#include "DataConfig.h"
-struct TableOfContent;
-struct Header;
-struct TableOfContent
+struct StageDAT_FileInfo
 {
-	char name[16];
-	uint32_t sectorOffset;
+	std::filesystem::path FilePath;
+	uint32_t FileName_Hash;
+	uint32_t FileExtension_Hash;
+	size_t FileSize;
 };
 
-struct Header
+struct StageDAT_Sections
 {
-	__time32_t buildTime;
-	uint16_t nVersion;
-	uint16_t nTableOfContent_SectorCount;
-	uint16_t nStageCount;
-	uint16_t nGameId;
-	uint16_t reserved;
+	std::string SectionName;
+	std::vector<StageDAT_FileInfo> Files;
 };
-bool Setup_HashList();
-void StageDAT_Decrypt(std::string GamePath);
+
+struct StageDAT_StageMetadata
+{
+	std::string StageName;
+	std::vector<StageDAT_Sections> Sections;
+
+	StageDAT_Sections GetSectionByName(std::string SectionName)
+	{
+		for (auto& section : Sections)
+		{
+			if (section.SectionName == SectionName)
+			{
+				return section;
+			}
+		}
+	}
+};

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <PATH_DEMO_DIRECTORY>C:\Program Files (x86)\Steam\steamapps\common\ZONE OF THE ENDERS THE 2nd RUNNER MARS ANUBIS ZONE OF THE ENDERS MARS ORANGE CASE</PATH_DEMO_DIRECTORY>
+    <PATH_DIRECTORY>C:\Program Files (x86)\Steam\steamapps\common\ZONE OF THE ENDERS THE 2nd RUNNER MARS ANUBIS ZONE OF THE ENDERS MARS</PATH_DIRECTORY>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_PropertySheetDisplayName>Mod_PropertySheet</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="PATH_DEMO_DIRECTORY">
+      <Value>$(PATH_DEMO_DIRECTORY)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="PATH_DIRECTORY">
+      <Value>$(PATH_DIRECTORY)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -16,5 +16,5 @@ namespace GameTypes::Jehuty
 		int Is_Halberd_Owned;
 		int Is_Mummy_Owned;
 	};
-	const enum E_kCharacterFlags { JEHUTY, JEHUTY_V2, JEHUTY_DAMAGED, JEHUTY_DAMAGED_ALIAS, JEHUTY_NAKED };
+	const enum E_kCharacterFlags { JEHUTY, JEHUTY_V2, JEHUTY_DAMAGED, JEHUTY_DAMAGED_END, JEHUTY_NAKED };
 }
