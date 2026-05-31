@@ -67,10 +67,7 @@ hash:
 			while (std::getline(TextFile, Line))
 			{
 				if (Line.empty()) { continue; }
-				std::ostringstream ss;
-				ss << std::format()
-				ss << "0x" << std::uppercase << std::hex << Utility::HashStr(Line.c_str(), false) << std::endl;
-				OutFile << ss.str();
+				OutFile << std::format("0x{:<8X} : {}", Utility::HashStr(Line.c_str(), false), Line) << std::endl;
 			}
 			TextFile.close();
 		}
