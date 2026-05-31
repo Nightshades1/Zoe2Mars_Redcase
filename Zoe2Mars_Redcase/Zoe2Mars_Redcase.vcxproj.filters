@@ -9,17 +9,17 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\GameTypes">
       <UniqueIdentifier>{e7eb9c38-a4f0-4f07-aa78-7fc8427b4434}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GameTypes\Jehuty">
       <UniqueIdentifier>{a434903b-277b-47b3-8b6a-08c4730c8f0a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\ModAssets">
+    <Filter Include="Ressource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Ressource Files\ModAssets">
       <UniqueIdentifier>{272024f1-0863-48b2-b0f2-755f044c8a9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -62,10 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ModAssets\arial.ttf">
-      <Filter>Resource Files\ModAssets</Filter>
+      <Filter>Ressource Files\ModAssets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ModAssets\Settings.ini">
-      <Filter>Resource Files\ModAssets</Filter>
+      <Filter>Ressource Files\ModAssets</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>
