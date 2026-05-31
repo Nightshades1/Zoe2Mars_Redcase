@@ -14,7 +14,7 @@ stage:
 
 hash:
   hash a string          -> StageDec.exe hash -s jeh_def.mdz
-  hash a list of strings -> StageDec.exe hash -l <path>\\\\MyList.txt
+  hash a list of strings -> StageDec.exe hash -l <path>/MyList.txt
 )";
 
 	CLI::App app("StageDec");
@@ -68,7 +68,8 @@ hash:
 			{
 				if (Line.empty()) { continue; }
 				std::ostringstream ss;
-				ss << Line << ":" << "0x" << std::uppercase << std::hex << Utility::HashStr(Line.c_str(), false) << std::endl;
+				ss << std::format()
+				ss << "0x" << std::uppercase << std::hex << Utility::HashStr(Line.c_str(), false) << std::endl;
 				OutFile << ss.str();
 			}
 			TextFile.close();

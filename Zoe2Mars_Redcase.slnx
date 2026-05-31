@@ -1,0 +1,28 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Debug (Demo)" />
+    <BuildType Name="Release" />
+    <BuildType Name="Release (Demo)" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Assets/">
+    <File Path="Assets/cygames - demo.zip" />
+  </Folder>
+  <Folder Name="/Assets/Steam/" />
+  <Folder Name="/Assets/Steam/Demo Version/">
+    <File Path="Assets/Steam/Demo Version/steam_appid.txt" />
+  </Folder>
+  <Folder Name="/Assets/Steam/Full Version/">
+    <File Path="Assets/Steam/Full Version/steam_appid.txt" />
+  </Folder>
+  <Project Path="StageDec/StageDec.vcxproj" Id="ce429432-14d9-4f0d-b4e6-be950f159df6">
+    <BuildType Solution="Debug (Demo)|*" Project="Debug" />
+    <BuildType Solution="Release (Demo)|*" Project="Release" />
+  </Project>
+  <Project Path="Zoe2Mars_Redcase/Zoe2Mars_Redcase.vcxproj" Id="2a586bad-9ec1-49fb-ae0c-990be7648f9f" />
+  <Project Path="Zoe2Mars_Redcase_Launcher/Zoe2Mars_Redcase_Launcher.vcxproj" Id="e371c1f7-f347-4a10-bd1b-8370f244f4ca">
+    <BuildType Solution="Debug (Demo)|*" Project="Debug" />
+    <BuildType Solution="Release (Demo)|*" Project="Release" />
+  </Project>
+</Solution>
