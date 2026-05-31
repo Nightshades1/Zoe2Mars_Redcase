@@ -15,24 +15,24 @@ namespace Utility
 		{0x0C983C6B,"cnf"},
 		// Scene  Init / Mission Script
 		{0x62877D7F,"bin"}, // Scene Binary initialization
-		{0x000863BE,"scx"}, // Scene Compiled Bytecode (scripting mission objective, events, global game variables, setting up the Stage, compiled to bytecode)
+		{0x000863BE,"scx"}, // Scene Compiled Bytecode (scripting mission objective,Starting pos, events, global game variables, setting up the Stage, compiled to bytecode)
 
 		//Motion System (MT_SYSTEM)
-		{0x00ED22C7,"mtl"}, // Motion Table, same function as mtz, Should be a giant list of Quaternions for each frame of the animation (for bone transformations)
-		{0x0000856A,"mts"}, // Motion Stream (Pointer to the actual motion data) 
+		{0x00ED22C7,"mtl"}, // Motion Table
+		{0x0000856A,"mts"}, // Motion Sequence Table
 		{0x003B530D,"mtz"},
 
-		//Hazardous Core (HZD_CORE) Stage + Character Collision + Used for the AI Path finding system and destroyable objects
-		{0x0037B1E7,"hzt"},// HZD_TREE, "HazardTree"
-		{0x001373D8,"trz"},
-		{0x0010ABBD,"hz2"},
+		//Hazardous Core (HZD_CORE) Stage + Character Collision
+		{0x0037B1E7,"hzt"},// HZD_TREE, "HazardTree" / Hazardous Traps (destroyable object - player collision bounding box)
+		{0x001373D8,"trz"},// Trigger Zones (player collision - bounding boxes) / Destroyable object (bounding boxes that receive the damage)
+		{0x0010ABBD,"hz2"},// List of planes that shape the stage mesh(es) collision.
 
 		//Drawing Graphics System (DG_System)
 		{0x003B12FB,"mdz"},// 3D Model
 		{0x001E5452,"tex"},// Texture (Image Data+CLUT)
-		{0x001CED17,"lit"},// Stage lighting
+		{0x001CED17,"lit"},// Stage light
 		{0x066E60C1,"flw"},// Flow Mask used on every Orbital frame depending of the health (red,yellow,blue)
-		{0x038AB1D7,"mfl"},// Mask flow ?
+		{0x038AB1D7,"mfl"},// Motion flow
 		{0x00104639,"ric"},// ps2 icon
 
 		//SPR_System (SPRITES)
@@ -43,7 +43,7 @@ namespace Utility
 		{0x00037E6B,"eft"}, // Sound effect ?
 		{0x00000E56,"var"}, //SCX Related ?
 		{0x0000321E,"rpd"}, //VR ?
-		{0x00CB3B7A,"cvz"}, // Perhaps an encrypted .csv ?
+		{0x00CB3B7A,"cvz"}, //List of vertices for basic models (mostly debris spawned from an object being destroyed eg: Calisto ice etc)
 		{0x0688D9EB,"ene"},
 		{0x398168E9,"row"}, //Image
 	};

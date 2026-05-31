@@ -2,7 +2,6 @@
 #include "StageDAT.h"
 #include "Utility.h"
 #include <assert.h>
-
 namespace StageDAT
 {
 	// Fully decrypted STAGE.DAT and the development \"stage\" folder with all files.
@@ -54,7 +53,12 @@ namespace StageDAT
 	{
 		for (int StageIndex = 0; StageIndex < m_pStageDAT_Header->StageCount; StageIndex++)
 		{
-			std::ofstream DataCnf_Output(std::format("stage\\{}\\data.cnf", m_pStageDAT_Toc[StageIndex].name));
+			std::string Stage_DirectoryPath(std::format(".\\stage\\{}", m_pStageDAT_Toc[StageIndex].name));
+			if (!std::filesystem::exists(Stage_DirectoryPath))
+			{
+				std::filesystem::create_directories(Stage_DirectoryPath);
+			}
+			std::ofstream DataCnf_Output(std::format(".\\stage\\{}\\data.cnf", m_pStageDAT_Toc[StageIndex].name));
 			m_pStageDataConfig  = reinterpret_cast<int*>((char*)m_StageDAT.data() + m_pStageDAT_Toc[StageIndex].sectorOffset * SECTOR_SIZE);
 			int  TagNum         = *(int*)m_pStageDataConfig;
 			int  TagSize        = TagNum * sizeof(SectionTag) + 4; // Include the END TAG
@@ -63,12 +67,14 @@ namespace StageDAT
 			std::string SectionName;
 			m_pStageDataConfig++;
 			SectionTag* pTagIterator = reinterpret_cast<SectionTag*>(m_pStageDataConfig);
+			SectionTag* SectionTag = static_cast<struct SectionTag*>(pTagIterator); // This pointer is never incremented
 
 			/*Nullify all !*/
-			int* EditorMetadata = (int*)((char*)m_pStageDataConfig + TagSize);
-			memset(EditorMetadata, NULL, Utility::nBytesRemaining(EditorMetadata, m_StageDAT.data()));
+			int* SomeMetadata = (int*)((char*)m_pStageDataConfig + TagSize);
+			memset(SomeMetadata, NULL, Utility::nBytesRemaining(SomeMetadata, m_StageDAT.data()));
 
 			Utility::LogMessage(std::format("======{}======", m_pStageDAT_Toc[StageIndex].name));
+			std::string StageName = m_pStageDAT_Toc[StageIndex].name;
 			for (int TagIndex = 0; TagIndex < TagNum; TagIndex++, pTagIterator++)
 			{
 				if (IS_SECTION_TAG(pTagIterator->Identifier))
@@ -110,7 +116,6 @@ namespace StageDAT
 					{
 						int    AudioStream_Index = 0;
 						size_t Stream_Size       = 0;
-
 						while (TagIndex++, pTagIterator++, pTagIterator->Identifier != DATACONFIG_SECTION_END)
 						{
 							DataCnf_Output << std::format("SoundPack{:d}.sdx", AudioStream_Index) << std::endl;
@@ -118,10 +123,13 @@ namespace StageDAT
 							Utility::LogMessage(std::format("TrackIndex({:d}) {:<16} {:08X} {:08X} {:08X} Offset[{:d}]", AudioStream->StreamIndex, "", AudioStream->StreamIndex, AudioStream->padding, AudioStream->Offset, AudioStream->Offset));
 
 							bool HasNext_Stream           = (AudioStream[1].Offset != 0);
-							HasNext_Stream ? Stream_Size  = AudioStream[1].Offset - AudioStream->Offset : Stream_Size = pTagIterator->AllocSize;
+							HasNext_Stream ? Stream_Size  = AudioStream[1].Offset - AudioStream->Offset : Stream_Size = SectionTag->AllocSize - AudioStream->Offset;
 							std::filesystem::path OutPath = std::format(".\\stage\\{}\\.sound\\SoundPack{:d}.sdx", m_pStageDAT_Toc[StageIndex].name, AudioStream_Index);
 							Utility::SaveFile(OutPath, pSectionData, Stream_Size);
-							if (HasNext_Stream) { pSectionData += Stream_Size, AudioStream_Index++; }
+							if (HasNext_Stream) { 
+								AudioStream_Index++;
+								pSectionData += Stream_Size / 4;
+							}
 						}
 					}
 					if (pTagIterator->Identifier == DATACONFIG_SECTION_END)
@@ -138,15 +146,16 @@ namespace StageDAT
 					size_t      FileSize       = 0;
 					std::string ExtName        = Utility::GetStringFromHash(FileInfo->ExtensionHash);
 					std::string FileName       = Utility::GetStringFromHash(FileInfo->FileNameHash);
-					FileName.starts_with("0x") ? DataCnf_Output << FileName + "." + ExtName << std::endl : DataCnf_Output << FileName << std::endl;
-					Utility::LogMessage(std::format("{:<30} {:08X} {:08X} {:08X} {:>60}|{}", "[FILE]", FileInfo->ExtensionHash, FileInfo->FileNameHash, FileInfo->Offset, ExtName, FileName));
+					//Enforce the proper extension in case the filename hash have a collision
+					FileName.starts_with("0x") ? DataCnf_Output << FileName + "." + ExtName << std::endl : DataCnf_Output << FileName + "." + ExtName << std::endl;
+					Utility::LogMessage(std::format("{:<30} {:08X} {:08X} {:08X} {:>60}|{}.{}", "[FILE]", FileInfo->ExtensionHash, FileInfo->FileNameHash, FileInfo->Offset, ExtName, FileName,ExtName));
 
 					// If the next TAG is another FILE (otherwise the last), Calculate the file size based on the next file offset.
 					bool Has_NextFile       = (FileInfo[1].ExtensionHash != 0 && FileInfo[1].FileNameHash != 0 && FileInfo[1].Offset != 0);
 					Has_NextFile ? FileSize = FileInfo[1].Offset - FileInfo->Offset : FileSize = DecompressedSection_Data.size() - FileInfo->Offset;
 
 					std::filesystem::path OutPath;
-					FileName.starts_with("0x") ? OutPath = std::format(".\\stage\\{}\\{}\\{}.{}", m_pStageDAT_Toc[StageIndex].name, SectionName, FileName, ExtName) : OutPath = std::format(".\\stage\\{}\\{}\\{}", m_pStageDAT_Toc[StageIndex].name, SectionName, FileName);
+					FileName.starts_with("0x") ? OutPath = std::format(".\\stage\\{}\\{}\\{}.{}", m_pStageDAT_Toc[StageIndex].name, SectionName, FileName, ExtName) : OutPath = std::format(".\\stage\\{}\\{}\\{}.{}", m_pStageDAT_Toc[StageIndex].name, SectionName, FileName,ExtName);
 					Utility::SaveFile(OutPath, pFileData, FileSize);
 				}
 			}
@@ -178,6 +187,94 @@ namespace StageBuilder
 {
 	namespace fs = std::filesystem;
 	namespace {
+		std::vector<StageInfo> SetupPaths_LocalDataConfig()
+		{
+			if (!fs::exists(".\\stage"))
+			{
+				std::cerr << "Error: \"stage\" folder doesn't exist" << std::endl;
+				ExitProcess(1);
+			}
+			std::vector<StageInfo> StageInfo_List;
+			for (auto& DirEntry : fs::recursive_directory_iterator(".\\stage"))
+			{
+				bool Is_InSection = false;
+				fs::path Path = DirEntry.path();
+				if (!DirEntry.is_regular_file()) continue;
+				if (Path.extension() != ".cnf") continue;
+				if (Path.filename() == "data.cnf")
+				{
+					StageInfo StageInfo{};
+					Section SectionInfo{};
+					std::ifstream DataCnf(Path);
+					fs::path StagePath = Path.parent_path();
+					fs::path SectionPath;
+					std::string StageName = StagePath.stem().string();
+					StageInfo.StageName = StageName;
+					std::string SectionName;
+					std::string Line;
+					int LineNum    = 0;
+					int SectionIdx = -1;
+					while (std::getline(DataCnf, Line))
+					{
+						if (Line.empty()) continue;
+						if (!Is_InSection)
+						{
+							if (Map_Section_NameToID.count(Line) > 0)
+							{
+								SetSection:
+								Is_InSection                  = true;
+								SectionName                   = Line;
+								SectionPath                   = fs::path(StagePath).append(SectionName);
+								SectionInfo.SectionName       = SectionName;
+								SectionInfo.SectionIdentifier = Map_Section_NameToID[SectionName];
+								StageInfo.SectionList.push_back(SectionInfo);
+								SectionIdx++;
+								if (!fs::exists(SectionPath)) {
+									std::cerr << std::format("Folder \"{}\" doesn't exist, line:{:d}", SectionPath.string(), LineNum) << std::endl;
+									ExitProcess(1);
+								}
+							}
+							else {
+								std::cerr << std::format("Error: Unknown section \"{}\" at line:{:d}", Line, LineNum) << std::endl;
+								ExitProcess(1);
+							}
+							continue;
+						}
+						if (Map_Section_NameToID.count(Line) > 0)
+						{
+							goto SetSection;
+						}
+						fs::path    FilePath = fs::path(SectionPath).append(Line);
+						std::string FileName = FilePath.filename().string();
+						std::string ExtName  = FilePath.extension().stem().string().substr(1);
+						if (!fs::exists(FilePath))
+						{
+							std::cerr << std::format("Error: File \"{}\" doesn't exist, line:{:d}", Line, LineNum) << std::endl;
+							ExitProcess(1);
+						}
+						StageBuilder::File FileInfo;
+						FileName.starts_with("0x") ? FileInfo.FileName_Hash = std::stoul(FileName, nullptr, 16) : FileInfo.FileName_Hash = Utility::HashStr(FileName.c_str(), false);
+						FileInfo.Size                                       = fs::directory_entry(FilePath).file_size();
+						FileInfo.Path                                       = FilePath;
+						FileInfo.FileName                                   = FileName;
+						FileInfo.ExtName                                    = ExtName;
+						FileInfo.Extension_Hash                             = Utility::HashMap_ExtensionToHash[ExtName];
+						StageInfo.SectionList.at(SectionIdx).SectionSize   += FileInfo.Size;
+						StageInfo.SectionList.at(SectionIdx).FilesCount    += 1;
+						StageInfo.FilesCount                               += 1;
+						StageInfo.TotalSize                                += FileInfo.Size;
+						StageInfo.SectionList.at(SectionIdx).FileList.push_back(FileInfo);
+						LineNum++;
+					}
+					StageInfo_List.push_back(StageInfo);
+				}
+			}
+			std::sort(StageInfo_List.begin(), StageInfo_List.end(), [](const StageInfo& A, const StageInfo& B)
+			{
+				return A.StageName == "init" && B.StageName != "init";
+			});
+			return StageInfo_List;
+		}
 		std::vector<StageInfo> SetupPathsFromDir()
 		{
 			if (!fs::exists(".\\stage"))
@@ -192,7 +289,7 @@ namespace StageBuilder
 				if (StageDir.is_directory())
 				{
 					std::string StageName = StageDir.path().stem().string();
-					StageInfo.StageName = StageName;
+					StageInfo.StageName   = StageName;
 					for (auto& SectionDir : fs::directory_iterator(StageDir))
 					{
 						std::string SectionName = SectionDir.path().stem().string();
@@ -206,7 +303,7 @@ namespace StageBuilder
 							{
 								StageBuilder::File FileInfo;
 								std::string FileName = GameFile.path().filename().string();
-								std::string ExtName = GameFile.path().extension().stem().string().substr(1);
+								std::string ExtName  = GameFile.path().extension().stem().string().substr(1);
 								if (GameFile.is_regular_file() && Utility::HashMap_ExtensionToHash.count(ExtName) > 0)
 								{
 									if (GameFile.file_size() == 0) 
@@ -228,8 +325,9 @@ namespace StageBuilder
 									SectionInfo.FileList.push_back(FileInfo);
 								}
 							}
-							/*Sort all files extension*/
-							std::sort(SectionInfo.FileList.begin(), SectionInfo.FileList.end(),[](StageBuilder::File A,StageBuilder::File B)
+							// Sort all files extension
+							// NOTE: Required by the game as it initialize the files as soon as they are readt --Nightshades 24/05/2026
+							std::sort(SectionInfo.FileList.begin(), SectionInfo.FileList.end(),[](StageBuilder::File& A,StageBuilder::File& B)
 							{
 								int WeightA = GetFilesWeight(A.ExtName);
 								int WeightB = GetFilesWeight(B.ExtName);
@@ -240,8 +338,8 @@ namespace StageBuilder
 						}
 					}
 					StageInfo_List.push_back(StageInfo);
-					/*Sort all sections by weights*/
-					std::sort(StageInfo_List.at(StageInfo_List.size()-1).SectionList.begin(), StageInfo_List.at(StageInfo_List.size()-1).SectionList.end(),[](StageBuilder::Section A, StageBuilder::Section B)
+					// Sort all sections by weights
+					std::sort(StageInfo_List.at(StageInfo_List.size()-1).SectionList.begin(), StageInfo_List.at(StageInfo_List.size()-1).SectionList.end(),[](StageBuilder::Section& A, StageBuilder::Section& B)
 						{
 							int WeightA = GetSectionWeight(A.SectionName);
 						    int WeightB = GetSectionWeight(B.SectionName);
@@ -250,11 +348,17 @@ namespace StageBuilder
 					    });
 				}
 			}
+			// NOTE: Critical to the game engine if the INIT stage isn't the 1st one, sounds wont play correctly, sort stages --Nightshades 24/05/2026
+			std::sort(StageInfo_List.begin(), StageInfo_List.end(), [](const StageInfo& A,const StageInfo& B) 
+			{
+					return A.StageName == "init" && B.StageName != "init";
+			});
 			return StageInfo_List;
 		}
 	}
 	bool Build()
 	{
+		//std::vector<StageBuilder::StageInfo> StageInfo = SetupPaths_LocalDataConfig();
 		std::vector<StageBuilder::StageInfo> StageInfo = SetupPathsFromDir();
 		if (StageInfo.size() > 0)
 		{
@@ -296,8 +400,11 @@ namespace StageBuilder
 					uint8_t* SectionData    = (static_cast<uint8_t*>(Cache) + StageOffset + SectionOffset);
 					auto     CurrentSection = StageInfo[StageIndex].SectionList[SectionIndex];
 
-					SectionTag Tag(CurrentSection.SectionIdentifier, 0, CurrentSection.SectionSize);
-					memcpy(WorkingPtr, &Tag, sizeof(SectionTag));
+					/*The total size of all files uncompressed*/
+					SectionTag* pSectionTag = (SectionTag*)WorkingPtr;
+					pSectionTag->Identifier = CurrentSection.SectionIdentifier;
+					pSectionTag->paddding   = 0;
+					pSectionTag->AllocSize  = CurrentSection.SectionSize;
 					WorkingPtr += sizeof(SectionTag);
 
 					Utility::LogMessage(std::format("[{}]", CurrentSection.SectionName));
@@ -306,8 +413,8 @@ namespace StageBuilder
 						if (CurrentSection.SectionIdentifier == DATACONFIG_SECTION_SOUND)
 						{
 							AudioStream_TAG Tag(StreamIdx, 0, FileOffset);
-							memcpy(WorkingPtr, &Tag, sizeof(FileTag));
-							WorkingPtr += sizeof(FileTag);
+							memcpy(WorkingPtr, &Tag, sizeof(AudioStream_TAG));
+							WorkingPtr += sizeof(AudioStream_TAG);
 							StreamIdx++;
 						}
 						else
@@ -317,23 +424,64 @@ namespace StageBuilder
 							WorkingPtr += sizeof(FileTag);
 						}
 						Utility::LogMessage(std::format("{:>25}", GameFile.FileName));
-						std::ifstream TempFile(GameFile.Path, std::ios::binary);
-						TempFile.read(reinterpret_cast<char*>(SectionData + FileOffset), GameFile.Size);
+						HANDLE hFile = CreateFileW(
+							GameFile.Path.c_str(),
+							GENERIC_READ,
+							FILE_SHARE_READ,
+							NULL,
+							OPEN_EXISTING,
+							FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN,
+							NULL
+						);
+						ReadFile(hFile, SectionData+FileOffset, static_cast<DWORD>(GameFile.Size), NULL, NULL);
+						CloseHandle(hFile);
+						//if (!CurrentSection.SectionIdentifier == DATACONFIG_SECTION_SOUND)
+						//{
+						//	int Remaining = NormAlign(GameFile.Size, 128);
+						//	if (Remaining != GameFile.Size)
+						//	{
+						//		int pad_to_128 = Remaining - GameFile.Size;
+						//		FileOffset += GameFile.Size + pad_to_128;
+						//		pSectionTag->AllocSize += pad_to_128;
+						//	}
+						//}
+						//else {
+						//	int Remaining = NormAlign(GameFile.Size, 2048);
+						//	if (Remaining != GameFile.Size)
+						//	{
+						//		int pad_to_16 = Remaining - GameFile.Size;
+						//		FileOffset += GameFile.Size + pad_to_16;
+						//		pSectionTag->AllocSize += GameFile.Size + pad_to_16;
+						//	}
+						//	else {
+						//		FileOffset += GameFile.Size;
+						//	}
+						//}
 						FileOffset += GameFile.Size;
 					}
-					// Directly the next Stage if it was the last section
-					SectionOffset += SECTOR_ALIGN(CurrentSection.SectionSize);
-					Tag.Identifier = DATACONFIG_SECTION_END;
-					memcpy(WorkingPtr, &Tag, sizeof(SectionTag));
+					SectionOffset += SECTOR_ALIGN(pSectionTag->AllocSize);
+					SectionTag SectionTag_End{};
+					SectionTag_End.paddding   = 0;
+					SectionTag_End.Identifier = DATACONFIG_SECTION_END;
+					SectionTag_End.AllocSize  = pSectionTag->AllocSize;
+					memcpy(WorkingPtr, &SectionTag_End, sizeof(SectionTag));
 					WorkingPtr += sizeof(SectionTag);
 				}
 				Utility::LogMessage("======END OF STAGE======\n");
 				StageOffset += SectionOffset;
 			}
 			size_t TotalSize = StageOffset;
-			std::ofstream OutFile(".\\STAGE.DAT", std::ios::binary);
-			OutFile.write(static_cast<char*>(Cache), TotalSize);
-			OutFile.close();
+			HANDLE OutFile = CreateFileW(
+				L".\\STAGE.DAT",
+				GENERIC_WRITE,
+				0,
+				NULL,
+				CREATE_ALWAYS,
+				FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN,
+				NULL
+			);
+			WriteFile(OutFile, Cache, TotalSize, NULL, NULL);
+			CloseHandle(OutFile);
 			VirtualFree(Cache, NULL, MEM_RELEASE);
 			return true;
 		}
@@ -345,9 +493,9 @@ namespace StageBuilder
 int GetSectionWeight(std::string& SectionName)
 {
 	if (SectionName == ".binary")   return 0;
-	if (SectionName == ".nocache")  return 1;
+	if (SectionName == ".nocache")  return 3;
 	if (SectionName == ".cache")    return 2;
-	if (SectionName == ".resident") return 3;
+	if (SectionName == ".resident") return 1;
 	if (SectionName == ".sound")    return 4;
 }
 
@@ -362,17 +510,18 @@ int GetFilesWeight(std::string& ExtName)
 	if (ExtName == "row") return 6;
 	if (ExtName == "ric") return 7;
 	if (ExtName == "o2d") return 8;
-	if (ExtName == "mfl") return 9;
-	if (ExtName == "mdz") return 10;
-	if (ExtName == "lit") return 11;
-	if (ExtName == "hzt") return 12;
-	if (ExtName == "hz2") return 13;
-	if (ExtName == "flw") return 14;
-	if (ExtName == "ene") return 15;
-	if (ExtName == "eft") return 16;
-	if (ExtName == "cvz") return 17;
-	if (ExtName == "mtl") return 18;
-	if (ExtName == "mts") return 19;
-	if (ExtName == "scx") return 20;
-	return 21;
+	if (ExtName == "mtz") return 9;
+	if (ExtName == "mfl") return 10;
+	if (ExtName == "mdz") return 11;
+	if (ExtName == "lit") return 12;
+	if (ExtName == "hzt") return 13;
+	if (ExtName == "hz2") return 14;
+	if (ExtName == "flw") return 15;
+	if (ExtName == "ene") return 16;
+	if (ExtName == "eft") return 17;
+	if (ExtName == "cvz") return 18;
+	if (ExtName == "mtl") return 19;
+	if (ExtName == "mts") return 20;
+	if (ExtName == "scx") return 21;
+	return 22;
 }

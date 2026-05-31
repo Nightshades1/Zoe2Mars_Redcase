@@ -13,6 +13,14 @@ namespace Utility
 		}
 		if (HashMap_GameString.count(nStringHashed) > 0)
 		{
+			std::string& GameString = HashMap_GameString[nStringHashed];
+			size_t LastDot = GameString.find_last_of(".");
+			if (LastDot != std::string::npos)
+			{
+				GameString.erase(LastDot);
+				ss << GameString;
+				return std::string(ss.str());
+			}
 			ss << HashMap_GameString[nStringHashed];
 			return std::string(ss.str());
 		}
@@ -83,7 +91,6 @@ namespace Utility
 			HashMap_GameString[Utility::HashStr(Stage_Plus_Extension.c_str(), false)] = Stage_Plus_Extension;
 		}
 	}
-
 	bool Setup_HashList()
 	{
 		uint32_t Hash = 0;
@@ -97,7 +104,7 @@ namespace Utility
 		while (std::getline(strlist, Line))
 		{
 			if (Line.empty()) continue;
-			if (size_t pos = Line.find(".mts") != Line.npos)
+			if (Line.find(".mts") != Line.npos || Line.find(".mdz") != Line.npos || Line.find(".cvz") != Line.npos || Line.find(".mtz") != Line.npos)
 			{
 				size_t dot = Line.find_last_of(".");
 				std::string File_Name = Line.substr(0, dot);

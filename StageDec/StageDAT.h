@@ -18,6 +18,12 @@
 #define IS_COMPRESSION_TAG(data)          (((data)&0xFF000000 ) == 0x7E000000 )
 #define COMPRESSION_SIZE(data)	          ((data)&0x00FFFFFF)
 #define IS_COMMAND_TAG(data)	          (((data)&0xF0000000) == 0x70000000)
+#define NORM_ALIGN(a,align)	              ((((a) + (align) -1 ) / (align)) * (align))
+constexpr size_t NormAlign(size_t value, size_t alignment) 
+{
+	return alignment == 0 ? value : (((value + alignment - 1) / alignment) * alignment);
+}
+
 
 inline std::unordered_map<std::string, uint32_t> Map_Section_NameToID
 {
@@ -100,6 +106,7 @@ namespace StageBuilder
 	};
 	namespace {
 		inline std::vector<fs::path> PathList;
+		std::vector<StageInfo> SetupPaths_LocalDataConfig();
 		std::vector<StageInfo> SetupPathsFromDir();
 	}
 	inline std::vector<std::filesystem::path> Paths;
