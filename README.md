@@ -50,6 +50,7 @@ The demo version is recommended since it has debug features quite helping.
 3. Download StageDec (See Bellow), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
 
 ### Configuring the game / Testing your changes
+Note: To enable the debug menu, set the `DebugFlag` to 1 inside the `Debugger`->`Globals`, open the pause menu in-game and press L1.</br>
 1. The .elf of both games have been patched so that it load the files from the game directory,</br>
 be sure that in `PCSX2`->`Settings` the `Enable Host Filesystem` is ticked.
 
