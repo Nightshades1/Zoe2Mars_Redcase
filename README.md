@@ -25,7 +25,7 @@ However the entire game can be played in addition to the vs mode and the extra m
 
 1. Copy your installation from the full version over your demo installation at `Steam\steamapps\common\ZONE OF THE ENDERS THE 2nd RUNNER MARS ANUBIS ZONE OF THE ENDERS MARS ORANGE CASE`.
 
-2. Download the files at [Assets/Steam/Demo Version](Assets/Steam/Demo%20Version) and copy `Zoe2Mars.exe`,`steam_appid.txt` to your game directory, The .exe has been patched to disable all STAGE.DAT decryption, allowing you to start the game directly with IDA.
+2. Download the files at [Assets/Steam/Demo Version](Assets/Steam/Demo%20Version) and copy `Zoe2Mars.exe`,`steam_appid.txt` to your game directory, The .exe has been patched to disable all STAGE.DAT decryption, allowing you to start the game directly with IDA if wanted.
 
 3. (Skip if not the demo version) Extract `cygames pac.zip` in your game directory.
 
