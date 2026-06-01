@@ -45,7 +45,7 @@ The demo version is recommended since it has debug features quite helping.
 
 1. I recommend to open `PCSX2` -> `Tool` -> `Open Data Directory` and extract your game `.iso` in the PCSX2 `games` folder, you can delete the original `.elf` and `system.cnf`.
 
-2. Download the [ps2_patches.zip](Assets/PS2/ps2_patches.zip) then Extract the `patches` folder inside your PCSX2 `Data Directory`.
+2. Download the [ps2_patches.zip](https://github.com/Nightshades1/Zoe2Mars_Redcase/raw/refs/heads/master/Assets/PS2/ps2_patches.zip) then Extract the `patches` folder inside your PCSX2 `Data Directory`.
 
 3. Download StageDec (See Bellow), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
 
