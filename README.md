@@ -63,7 +63,7 @@ be sure that in `PCSX2`->`Settings` the `Enable Host Filesystem` is ticked.
 3. Still in the properties, go to `Debug` -> in the `Import Symbols` add the one found in the game folder named `globals.sym`.
 
 If everything is fine, you booted the game with a fully decrypted `STAGE.DAT`, Now you can open the PCSX2 Debugger, </br>
-when you click on the `Globals` tab, the `globals.sym` will reveal some Address/Varibles that i added.</br>
+when you click on the `Globals` tab, the `globals.sym` will reveal some Variables that i added.</br>
 </br>
 You can replace the `STAGE.DAT` at runtime but `be sure that you aren't adding or removing bytes or the game will crash`, In the `Globals` window, simply set the value of `LoadRequest` to `4113` the game will reload the stage and re-initialize the data.</br>
 </br>
