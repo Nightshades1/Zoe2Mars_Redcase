@@ -31,7 +31,7 @@ namespace Utility
 		{0x003B12FB,"mdz"},// 3D Model
 		{0x001E5452,"tex"},// Texture (Image Data+CLUT)
 		{0x001CED17,"lit"},// Stage light
-		{0x066E60C1,"flw"},// Flow Mask used on every Orbital frame depending of the health (red,yellow,blue)
+		{0x066E60C1,"flw"},// Flow line used on every Orbital frame depending of the health (red,yellow,blue)
 		{0x038AB1D7,"mfl"},// Motion flow
 		{0x00104639,"ric"},// ps2 icon
 
