@@ -1,7 +1,9 @@
 # Zoe2Mars_Redcase
 
 Zoe2Mars_Redcase is an attempt to allow researcher to reverse engine the PS2 / PC Mars version while providing an in-game mod panel for the PC version with a bunch of features such as extracting/overriding cygames files, allowing modding to some extent.</br>
-<img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/be70beec-7382-49d9-aa77-2281bb426323" />
+<img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/be70beec-7382-49d9-aa77-2281bb426323" /></br>
+<img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/e2bb6b23-2b88-481f-af31-64e2838e3683" />
+
 
 # Known Issues
 Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
