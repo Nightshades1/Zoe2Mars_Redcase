@@ -87,8 +87,8 @@ Solution Configuration marked with (Demo) will only build the mod with the "Demo
 Files built will be output in `Zoe2Mars_Redcase\x64\Release or Debug\Bin`.
 
 # Special Thanks
+[@Surihix](https://github.com/Surihix) For feedback about the "ZOE2" Theme made for the Mod Panel.
 [imgui](https://github.com/ocornut/imgui)</br>
 [cli11](https://github.com/cliutils/cli11)</br>
 [Detours](https://github.com/microsoft/Detours)</br>
 [vcpkg](https://github.com/microsoft/vcpkg/)</br>
-[@Surihix](https://github.com/Surihix) For feedback about the "ZOE2" Theme made for the Mod Panel.
