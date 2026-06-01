@@ -29,7 +29,7 @@ However the entire game can be played in addition to the vs mode and the extra m
 
 3. (Skip if not the demo version) Extract `cygames pac.zip` in your game directory.
 
-4. it is recommended to make a `Backup` folder and to copy/paste the original STAGE.DAT before using `StageDec`, See [StageDec - STAGE.DAT Extraction/Build Tool](https://github.com/Nightshades1/Zoe2Mars_Redcase/blob/master/README.md#stagedec---stagedat-extractionbuild-tool).
+4. it is recommended to make a `Backup` folder and to copy/paste the original `STAGE.DAT` before using `StageDec`, See [StageDec - STAGE.DAT Extraction/Build Tool](https://github.com/Nightshades1/Zoe2Mars_Redcase/blob/master/README.md#stagedec---stagedat-extractionbuild-tool).
 
 5. Once you have extracted all files from the original `STAGE.DAT` by using StageDec, you will have the decrypted one output where StageDec is located, you can either copy/paste it to your game/ZOE2 folder and start `Zoe2Mars_Redcase_Launcher.exe` or mess around and build a new STAGE.DAT for research/testing purpose.
 
