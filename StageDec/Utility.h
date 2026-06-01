@@ -20,7 +20,7 @@ namespace Utility
 		//Motion System (MT_SYSTEM)
 		{0x00ED22C7,"mtl"}, // Motion Table
 		{0x0000856A,"mts"}, // Motion Sequence Table
-		{0x003B530D,"mtz"},
+		{0x003B530D,"mtz"}, // Seems to be the alias of .mtl, both use the same function
 
 		//Hazardous Core (HZD_CORE) Stage + Character Collision
 		{0x0037B1E7,"hzt"},// HZD_TREE, "HazardTree" / Hazardous Traps (destroyable object - player collision bounding box)
