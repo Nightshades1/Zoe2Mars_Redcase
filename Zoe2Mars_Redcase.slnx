@@ -6,12 +6,12 @@
     <BuildType Name="Release (Demo)" />
     <Platform Name="x64" />
   </Configurations>
-  <Folder Name="/Assets/">
-    <File Path="Assets/cygames - demo.zip" />
-  </Folder>
+  <Folder Name="/Assets/" />
   <Folder Name="/Assets/Steam/" />
   <Folder Name="/Assets/Steam/Demo Version/">
+    <File Path="Assets/Steam/Demo Version/cygames pac.zip" />
     <File Path="Assets/Steam/Demo Version/steam_appid.txt" />
+    <File Path="Assets/Steam/Demo Version/Zoe2Mars.exe" />
   </Folder>
   <Folder Name="/Assets/Steam/Full Version/">
     <File Path="Assets/Steam/Full Version/steam_appid.txt" />
