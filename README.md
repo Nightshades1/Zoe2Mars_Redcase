@@ -1,6 +1,8 @@
 # Zoe2Mars_Redcase
 
 Zoe2Mars_Redcase is an attempt to allow researcher to reverse engine the PS2 / PC Mars version while providing an in-game mod panel for the PC version with a bunch of features such as extracting/overriding cygames files, allowing modding to some extent.</br>
+
+Many Assets names were recovered back from their hash due to leftover in the .bin files, especially the short stage name used by the development,Their meaning properly written in the mod panel :)
 <img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/be70beec-7382-49d9-aa77-2281bb426323" /></br>
 <img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/e2bb6b23-2b88-481f-af31-64e2838e3683" />
 
@@ -12,7 +14,7 @@ Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use th
 * Due to how the game work, Sending a `LoadRequest` while a FMV is playing, will freeze the game thread.
 
 ### Roadmap
-- [x] Build an app to allow the extraction/creation of the STAGE.DAT.
+- [x] Extraction/Creation of STAGE.DAT.
 - [x] Cygames Packages hook, Extraction/Overrides, Allowing modding.
 - [x] In-Game mod panel with a ZOE2 Theme.
 - [ ] Add Renderdoc injection for the game.
@@ -61,7 +63,7 @@ be sure that in `PCSX2`->`Settings` the `Enable Host Filesystem` is ticked.
 3. Still in the properties, go to `Debug` -> in the `Import Symbols` add the one found in the game folder named `globals.sym`.
 
 If everything is fine, you booted the game with a fully decrypted `STAGE.DAT`, Now you can open the PCSX2 Debugger, </br>
-when you click on the `Globals` tab, the `globals.sym` will reveal some Address/Varibles that i added.</br>
+when you click on the `Globals` tab, the `globals.sym` will reveal some Variables that i added.</br>
 </br>
 You can replace the `STAGE.DAT` at runtime but `be sure that you aren't adding or removing bytes or the game will crash`, In the `Globals` window, simply set the value of `LoadRequest` to `4113` the game will reload the stage and re-initialize the data.</br>
 </br>
