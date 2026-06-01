@@ -14,7 +14,7 @@ Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use th
 * Due to how the game work, Sending a `LoadRequest` while a FMV is playing, will freeze the game thread.
 
 ### Roadmap
-- [x] Build an app to allow the extraction/creation of the STAGE.DAT.
+- [x] Extraction/Creation of STAGE.DAT.
 - [x] Cygames Packages hook, Extraction/Overrides, Allowing modding.
 - [x] In-Game mod panel with a ZOE2 Theme.
 - [ ] Add Renderdoc injection for the game.
