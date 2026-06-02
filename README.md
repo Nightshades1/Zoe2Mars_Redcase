@@ -70,7 +70,7 @@ You can replace the `STAGE.DAT` at runtime but `be sure that you aren't adding o
 Do not reload the stage during a FMV or the game thread will be locked.
 
 # StageDec - STAGE.DAT Extraction/Build Tool
-Can be downloaded from the latest mod [releases](https://github.com/Nightshades1/Zoe2Mars_Redcase/releases).
+Is included and can be downloaded from the latest mod [releases](https://github.com/Nightshades1/Zoe2Mars_Redcase/releases).
 You may have a look at the [Samples batch files](Samples) on how to use StageDec, in addition the CLI have his own example/help, single Backward slashes also work.
 ### USAGE EXAMPLE
 ```
