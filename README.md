@@ -51,7 +51,7 @@ The demo version is recommended since it has debug features quite helping.
 
 2. Download the [ps2_patches.zip](https://github.com/Nightshades1/Zoe2Mars_Redcase/raw/refs/heads/master/Assets/PS2/ps2_patches.zip) then Extract the `patches` folder inside your PCSX2 `Data Directory`.
 
-3. Download StageDec, See [StageDec - STAGE.DAT Extraction/Build Tool](https://github.com/Nightshades1/Zoe2Mars_Redcase/blob/master/README.md#stagedec---stagedat-extractionbuild-tool), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
+3. Download StageDec, See [StageDec - STAGE.DAT Extraction/Build Tool](#stagedec---stagedat-extractionbuild-tool), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
 
 ### Configuring the game / Testing your changes
 Note: To enable the debug menu, set the `DebugFlag` to 1 inside the `Debugger`->`Globals`, open the pause menu in-game and press L1.</br>
