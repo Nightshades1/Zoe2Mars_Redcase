@@ -10,6 +10,12 @@
   <Folder Name="/Assets/PS2/">
     <File Path="Assets/PS2/ps2_patches.zip" />
   </Folder>
+  <Folder Name="/Assets/Samples/">
+    <File Path="Samples/Build and copy - Verbose.bat" />
+    <File Path="Samples/Build and copy.bat" />
+    <File Path="Samples/Extract Verbose.bat" />
+    <File Path="Samples/Extract.bat" />
+  </Folder>
   <Folder Name="/Assets/Steam/" />
   <Folder Name="/Assets/Steam/Demo Version/">
     <File Path="Assets/Steam/Demo Version/cygames pac.zip" />

@@ -1,0 +1,2 @@
+StageDec.exe -v stage -b > BuildLog.txt
+copy STAGE.DAT "C:/Program Files (x86)/Steam/steamapps/common/ZONE OF THE ENDERS THE 2nd RUNNER MARS ANUBIS ZONE OF THE ENDERS MARS ORANGE CASE/ZOE2/STAGE.DAT"
