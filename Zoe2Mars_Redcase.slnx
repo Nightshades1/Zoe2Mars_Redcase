@@ -7,6 +7,9 @@
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/Assets/" />
+  <Folder Name="/Assets/PS2/">
+    <File Path="Assets/PS2/ps2_patches.zip" />
+  </Folder>
   <Folder Name="/Assets/Steam/" />
   <Folder Name="/Assets/Steam/Demo Version/">
     <File Path="Assets/Steam/Demo Version/cygames pac.zip" />
