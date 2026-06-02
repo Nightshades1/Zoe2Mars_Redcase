@@ -423,7 +423,7 @@ namespace StageBuilder
 							memcpy(WorkingPtr, &Tag, sizeof(FileTag));
 							WorkingPtr += sizeof(FileTag);
 						}
-						Utility::LogMessage(std::format("{:>25}", GameFile.FileName));
+						Utility::LogMessage(std::format("{:>25} {:<10} Offset:{:08X} {:<5} FileSize(dec):{:d}",GameFile.FileName.c_str(),"", reinterpret_cast<DWORD>(SectionData + FileOffset) - (DWORD)Cache,"", GameFile.Size));
 						HANDLE hFile = CreateFileW(
 							GameFile.Path.c_str(),
 							GENERIC_READ,

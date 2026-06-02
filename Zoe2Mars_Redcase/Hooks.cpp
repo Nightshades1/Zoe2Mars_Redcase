@@ -31,7 +31,9 @@ namespace Hooks
 #else
 		Hooks::Game::oCygames_DecompressFiles = (Hooks::Game::Cygames_DecompressFiles_t)(GameOffsets::BaseAddress + 0x418E9C0);
 #endif
+		Hooks::WinAPI::oCreateFileA = CreateFileA;
 		DetourTransactionBegin();
+		DetourAttach(&(PVOID&)Hooks::WinAPI::oCreateFileA, Hooks::WinAPI::Hook_CreateFileA);
 		DetourAttach(&(PVOID&)Hooks::Game::oCygames_DecompressFiles, Hooks::Game::Cygames_DecompressFiles_Hook);
 		DetourTransactionCommit();
 	}
@@ -203,5 +205,10 @@ namespace Hooks::WinAPI
 			}
 		}
 		return CallWindowProc(oWndProc, hWnd, Msg, wParam, lParam);
+	}
+
+	HANDLE WINAPI Hook_CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+	{
+		return oCreateFileA(lpFileName, dwDesiredAccess, FILE_SHARE_READ | FILE_SHARE_WRITE, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
 	}
 }

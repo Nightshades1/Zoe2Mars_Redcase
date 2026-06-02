@@ -28,4 +28,8 @@ namespace Hooks::WinAPI
 {
 	LRESULT WINAPI Hook_WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 	inline WNDPROC oWndProc = nullptr;
+
+	typedef HANDLE (WINAPI *Hook_CreateFileA_t)(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+	HANDLE WINAPI Hook_CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+	inline Hook_CreateFileA_t oCreateFileA = nullptr;
 }
