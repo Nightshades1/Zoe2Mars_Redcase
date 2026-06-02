@@ -88,8 +88,9 @@ Visual Studio 2026 with C++ 20, vcpkg manifest will be used to download the depe
 Solution Configuration marked with (Demo) will only build the mod with the "Demo Version" offsets.</br>
 Files built will be output in `Zoe2Mars_Redcase\x64\Release or Debug\Bin`.
 
-# Special Thanks
+### Special Thanks
 [@Surihix](https://github.com/Surihix) For feedback about the "ZOE2" Theme made for the Mod Panel.</br>
+### This project use
 [imgui](https://github.com/ocornut/imgui)</br>
 [cli11](https://github.com/cliutils/cli11)</br>
 [Detours](https://github.com/microsoft/Detours)</br>
