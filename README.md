@@ -31,7 +31,7 @@ However the entire game can be played in addition to the vs mode and the extra m
 
 3. (Skip if not the demo version) Extract `cygames pac.zip` in your game directory.
 
-4. it is recommended to make a `Backup` folder and to copy/paste the original `STAGE.DAT` before using `StageDec`, See [StageDec - STAGE.DAT Extraction/Build Tool](https://github.com/Nightshades1/Zoe2Mars_Redcase/blob/master/README.md#stagedec---stagedat-extractionbuild-tool).
+4. it is recommended to make a `Backup` folder and to copy/paste the original `STAGE.DAT` before using `StageDec`, See [StageDec - STAGE.DAT Extraction/Build Tool](#stagedec---stagedat-extractionbuild-tool).
 
 5. Once you have extracted all files from the original `STAGE.DAT` by using StageDec, you will have the decrypted one output where StageDec is located, you can either copy/paste it to your game/ZOE2 folder and start `Zoe2Mars_Redcase_Launcher.exe` or mess around and build a new STAGE.DAT for research/testing purpose.
 
@@ -51,7 +51,7 @@ The demo version is recommended since it has debug features quite helping.
 
 2. Download the [ps2_patches.zip](https://github.com/Nightshades1/Zoe2Mars_Redcase/raw/refs/heads/master/Assets/PS2/ps2_patches.zip) then Extract the `patches` folder inside your PCSX2 `Data Directory`.
 
-3. Download StageDec, See [StageDec - STAGE.DAT Extraction/Build Tool](https://github.com/Nightshades1/Zoe2Mars_Redcase/blob/master/README.md#stagedec---stagedat-extractionbuild-tool), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
+3. Download StageDec, See [StageDec - STAGE.DAT Extraction/Build Tool](#stagedec---stagedat-extractionbuild-tool), Decrypt the `STAGE.DAT` (See Bellow on how to use) and copy it to your ZOE2 directory.</br>
 
 ### Configuring the game / Testing your changes
 Note: To enable the debug menu, set the `DebugFlag` to 1 inside the `Debugger`->`Globals`, open the pause menu in-game and press L1.</br>
@@ -70,7 +70,7 @@ You can replace the `STAGE.DAT` at runtime but `be sure that you aren't adding o
 Do not reload the stage during a FMV or the game thread will be locked.
 
 # StageDec - STAGE.DAT Extraction/Build Tool
-Can be downloaded from the latest mod [releases](https://github.com/Nightshades1/Zoe2Mars_Redcase/releases).
+Is included and can be downloaded from the latest mod [releases](https://github.com/Nightshades1/Zoe2Mars_Redcase/releases).
 You may have a look at the [Samples batch files](Samples) on how to use StageDec, in addition the CLI have his own example/help, single Backward slashes also work.
 ### USAGE EXAMPLE
 ```
@@ -88,8 +88,9 @@ Visual Studio 2026 with C++ 20, vcpkg manifest will be used to download the depe
 Solution Configuration marked with (Demo) will only build the mod with the "Demo Version" offsets.</br>
 Files built will be output in `Zoe2Mars_Redcase\x64\Release or Debug\Bin`.
 
-# Special Thanks
+### Special Thanks
 [@Surihix](https://github.com/Surihix) For feedback about the "ZOE2" Theme made for the Mod Panel.</br>
+### This project use
 [imgui](https://github.com/ocornut/imgui)</br>
 [cli11](https://github.com/cliutils/cli11)</br>
 [Detours](https://github.com/microsoft/Detours)</br>
