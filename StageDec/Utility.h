@@ -44,7 +44,7 @@ namespace Utility
 		{0x00000E56,"var"}, //SCX Related ?
 		{0x0000321E,"rpd"}, //VR ?
 		{0x00CB3B7A,"cvz"}, //List of vertices for basic models (mostly debris spawned from an object being destroyed eg: Calisto ice etc)
-		{0x0688D9EB,"ene"},
+		{0x0688D9EB,"ene"}, //Enemies starting position
 		{0x398168E9,"row"}, //Image
 	};
 	std::string GetStringFromHash(uint32_t nStringHashed);
