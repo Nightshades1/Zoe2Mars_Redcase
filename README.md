@@ -18,6 +18,7 @@ Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use th
 - [x] Cygames Packages hook, Extraction/Overrides, Allowing modding.
 - [x] In-Game mod panel with a ZOE2 Theme.
 - [x] CreateFileA Hook allowing targeted modification for files in the STAGE.DAT while the game run, mostly for analysis purpose.
+- [ ] Fix Wwise Audio issue for both Demo/Full version.
 - [ ] Add Renderdoc injection for the game.
 - [ ] Patches to play with a decrypted STAGE.DAT.
 - [x] Demo Version Patches to play with a decrypted STAGE.DAT.
