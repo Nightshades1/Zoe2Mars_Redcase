@@ -6,6 +6,8 @@ Many Assets names were recovered back from their hash due to leftover in the .bi
 <img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/be70beec-7382-49d9-aa77-2281bb426323" /></br>
 <img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/e2bb6b23-2b88-481f-af31-64e2838e3683" />
 
+Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wiki) for all informations.
+
 # Known Issues
 Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
 * Due to Denuvo, one last patch is missing to allow to play with a decrypted STAGE.DAT for the full version.
