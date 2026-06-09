@@ -18,7 +18,7 @@ namespace Utility
 		{0x000863BE,"scx"}, // Scene Compiled Bytecode (scripting mission objective,Starting pos, events, global game variables, setting up the Stage, compiled to bytecode)
 
 		//Motion System (MT_SYSTEM)
-		{0x00ED22C7,"mtl"}, // Motion Table
+		{0x00ED22C7,"mtl"}, // Motion List
 		{0x0000856A,"mts"}, // Motion Sequence Table
 		{0x003B530D,"mtz"}, // Seems to be the alias of .mtl, both use the same function
 
@@ -31,7 +31,7 @@ namespace Utility
 		{0x003B12FB,"mdz"},// 3D Model
 		{0x001E5452,"tex"},// Texture (Image Data+CLUT)
 		{0x001CED17,"lit"},// Stage light
-		{0x066E60C1,"flw"},// Flow line used on every Orbital frame depending of the health (red,yellow,blue)
+		{0x066E60C1,"flw"},// Flow lines used on every Orbital frame depending of the health (red,yellow,blue)
 		{0x038AB1D7,"mfl"},// Motion flow
 		{0x00104639,"ric"},// ps2 icon
 
@@ -41,11 +41,11 @@ namespace Utility
 		//GM_InitSystem (Game)
 		{0x03696528,"fnt"}, // Font ?
 		{0x00037E6B,"eft"}, // Sound effect ?
-		{0x00000E56,"var"}, //SCX Related ?
-		{0x0000321E,"rpd"}, //VR ?
-		{0x00CB3B7A,"cvz"}, //List of vertices for basic models (mostly debris spawned from an object being destroyed eg: Calisto ice etc)
-		{0x0688D9EB,"ene"}, //Enemies starting position
-		{0x398168E9,"row"}, //Image
+		{0x00000E56,"var"}, // SCX Related ?
+		{0x0000321E,"rpd"}, // VR ?
+		{0x00CB3B7A,"cvz"}, // List of vertices for basic models (mostly debris spawned from an object being destroyed eg: Calisto ice etc)
+		{0x0688D9EB,"ene"}, // Enemies starting position
+		{0x398168E9,"row"}, // Image
 	};
 	std::string GetStringFromHash(uint32_t nStringHashed);
 	uint32_t HashStr(const char* str, bool Is_ByteSwapped);
