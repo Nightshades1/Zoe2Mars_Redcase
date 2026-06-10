@@ -45,7 +45,7 @@ inline std::unordered_map<uint32_t, std::string> Map_Section_ID_ToName
 struct FileTag { uint32_t ExtensionHash; uint32_t FileNameHash; uint32_t Offset; };
 struct SectionTag { uint32_t Identifier; uint32_t paddding; uint32_t AllocSize; };
 struct CompressionInfo { uint32_t CompressedSize; uint32_t padding; uint32_t DecompressedSize; };
-struct AudioStream_TAG { uint32_t StreamIndex; uint32_t padding; uint32_t Offset; };
+struct AudioStream_TAG { uint32_t SoundPackID; uint32_t padding; uint32_t Offset; };
 struct TableOfContent
 {
 	char name[16];
@@ -89,6 +89,7 @@ namespace StageBuilder
 		fs::path Path;
 		uint32_t Extension_Hash = 0;
 		uint32_t FileName_Hash = 0;
+		uint32_t SoundPackID = 0;
 	};
 	struct Section {
 		std::string SectionName;

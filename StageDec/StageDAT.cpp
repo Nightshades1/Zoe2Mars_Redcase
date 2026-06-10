@@ -114,21 +114,23 @@ namespace StageDAT
 					}
 					if (pTagIterator->Identifier == DATACONFIG_SECTION_SOUND)
 					{
-						int    AudioStream_Index = 0;
+						int StreamIndex          = 0;
 						size_t Stream_Size       = 0;
+						size_t RelativeOffset    = (std::uintptr_t)pSectionData - (std::uintptr_t)m_StageDAT.data();
 						while (TagIndex++, pTagIterator++, pTagIterator->Identifier != DATACONFIG_SECTION_END)
 						{
-							DataCnf_Output << std::format("SoundPack{:d}.sdx", AudioStream_Index) << std::endl;
 							AudioStream_TAG* AudioStream  = (AudioStream_TAG*)pTagIterator;
-							Utility::LogMessage(std::format("TrackIndex({:d}) {:<16} {:08X} {:08X} {:08X} Offset[{:d}]", AudioStream->StreamIndex, "", AudioStream->StreamIndex, AudioStream->padding, AudioStream->Offset, AudioStream->Offset));
+							DataCnf_Output << std::format("SoundPack{:d}.sdx", AudioStream->SoundPackID) << std::endl;
+							Utility::LogMessage(std::format("SoundPackID({:d}) {:>16}{:08X} {:08X} {:08X} RelativeOffset:{:08X} (Mars -> us{:08X}.bnk) Offset[{:d}]",AudioStream->SoundPackID, "", AudioStream->SoundPackID, AudioStream->padding, AudioStream->Offset,RelativeOffset,RelativeOffset >> 11,AudioStream->Offset));
 
 							bool HasNext_Stream           = (AudioStream[1].Offset != 0);
 							HasNext_Stream ? Stream_Size  = AudioStream[1].Offset - AudioStream->Offset : Stream_Size = SectionTag->AllocSize - AudioStream->Offset;
-							std::filesystem::path OutPath = std::format(".\\stage\\{}\\.sound\\SoundPack{:d}.sdx", m_pStageDAT_Toc[StageIndex].name, AudioStream_Index);
+							std::filesystem::path OutPath = std::format(".\\stage\\{}\\.sound\\SoundPack{:d}.sdx", m_pStageDAT_Toc[StageIndex].name, AudioStream->SoundPackID);
 							Utility::SaveFile(OutPath, pSectionData, Stream_Size);
 							if (HasNext_Stream) { 
-								AudioStream_Index++;
 								pSectionData += Stream_Size / 4;
+								RelativeOffset = (std::uintptr_t)pSectionData - (std::uintptr_t)m_StageDAT.data();
+								StreamIndex++;
 							}
 						}
 					}
@@ -146,6 +148,7 @@ namespace StageDAT
 					size_t      FileSize       = 0;
 					std::string ExtName        = Utility::GetStringFromHash(FileInfo->ExtensionHash);
 					std::string FileName       = Utility::GetStringFromHash(FileInfo->FileNameHash);
+
 					//Enforce the proper extension in case the filename hash have a collision
 					FileName.starts_with("0x") ? DataCnf_Output << FileName + "." + ExtName << std::endl : DataCnf_Output << FileName + "." + ExtName << std::endl;
 					Utility::LogMessage(std::format("{:<30} {:08X} {:08X} {:08X} {:>60}|{}.{}", "[FILE]", FileInfo->ExtensionHash, FileInfo->FileNameHash, FileInfo->Offset, ExtName, FileName,ExtName));
@@ -254,6 +257,14 @@ namespace StageBuilder
 						}
 						StageBuilder::File FileInfo;
 						FileName.starts_with("0x") ? FileInfo.FileName_Hash = std::stoul(FileName, nullptr, 16) : FileInfo.FileName_Hash = Utility::HashStr(FileName.c_str(), false);
+						if(ExtName == "sdx")
+						{
+							uint32_t SoundPackID;
+							if (sscanf(FileName.c_str(), "SoundPack%d.sdx",&SoundPackID))
+							{
+								FileInfo.SoundPackID = SoundPackID;
+							}
+						}
 						FileInfo.Size                                       = fs::directory_entry(FilePath).file_size();
 						FileInfo.Path                                       = FilePath;
 						FileInfo.FileName                                   = FileName;
@@ -312,6 +323,14 @@ namespace StageBuilder
 										continue;
 									}
 									FileName.starts_with("0x") ? FileInfo.FileName_Hash = std::stoul(FileName,nullptr,16) : FileInfo.FileName_Hash = Utility::HashStr(FileName.c_str(), false);
+									if (ExtName == "sdx")
+									{
+										uint32_t SoundPackID;
+										if (sscanf(FileName.c_str(), "SoundPack%d.sdx", &SoundPackID))
+										{
+											FileInfo.SoundPackID = SoundPackID;
+										}
+									}
 									FileInfo.Size              = GameFile.file_size();
 									FileInfo.Path              = GameFile;
 									FileInfo.FileName          = FileName;
@@ -331,8 +350,11 @@ namespace StageBuilder
 							{
 								int WeightA = GetFilesWeight(A.ExtName);
 								int WeightB = GetFilesWeight(B.ExtName);
-								if (WeightA < WeightB) return true;
-								return false;
+								if (WeightA != WeightB)
+								{
+									return WeightA < WeightB;
+								}
+								return A.Extension_Hash > B.Extension_Hash;
 							});
 							StageInfo.SectionList.push_back(SectionInfo);
 						}
@@ -358,8 +380,8 @@ namespace StageBuilder
 	}
 	bool Build()
 	{
-		//std::vector<StageBuilder::StageInfo> StageInfo = SetupPaths_LocalDataConfig();
-		std::vector<StageBuilder::StageInfo> StageInfo = SetupPathsFromDir();
+		std::vector<StageBuilder::StageInfo> StageInfo = SetupPaths_LocalDataConfig();
+		//std::vector<StageBuilder::StageInfo> StageInfo = SetupPathsFromDir();
 		if (StageInfo.size() > 0)
 		{
 			constexpr uint64_t TwoGB           = 2ULL * 1024ULL * 1024ULL * 1024ULL;
@@ -412,7 +434,7 @@ namespace StageBuilder
 					{
 						if (CurrentSection.SectionIdentifier == DATACONFIG_SECTION_SOUND)
 						{
-							AudioStream_TAG Tag(StreamIdx, 0, FileOffset);
+							AudioStream_TAG Tag(GameFile.SoundPackID, 0, FileOffset);
 							memcpy(WorkingPtr, &Tag, sizeof(AudioStream_TAG));
 							WorkingPtr += sizeof(AudioStream_TAG);
 							StreamIdx++;
@@ -435,28 +457,6 @@ namespace StageBuilder
 						);
 						ReadFile(hFile, SectionData+FileOffset, static_cast<DWORD>(GameFile.Size), NULL, NULL);
 						CloseHandle(hFile);
-						//if (!CurrentSection.SectionIdentifier == DATACONFIG_SECTION_SOUND)
-						//{
-						//	int Remaining = NormAlign(GameFile.Size, 128);
-						//	if (Remaining != GameFile.Size)
-						//	{
-						//		int pad_to_128 = Remaining - GameFile.Size;
-						//		FileOffset += GameFile.Size + pad_to_128;
-						//		pSectionTag->AllocSize += pad_to_128;
-						//	}
-						//}
-						//else {
-						//	int Remaining = NormAlign(GameFile.Size, 2048);
-						//	if (Remaining != GameFile.Size)
-						//	{
-						//		int pad_to_16 = Remaining - GameFile.Size;
-						//		FileOffset += GameFile.Size + pad_to_16;
-						//		pSectionTag->AllocSize += GameFile.Size + pad_to_16;
-						//	}
-						//	else {
-						//		FileOffset += GameFile.Size;
-						//	}
-						//}
 						FileOffset += GameFile.Size;
 					}
 					SectionOffset += SECTOR_ALIGN(pSectionTag->AllocSize);
@@ -493,9 +493,9 @@ namespace StageBuilder
 int GetSectionWeight(std::string& SectionName)
 {
 	if (SectionName == ".binary")   return 0;
-	if (SectionName == ".nocache")  return 3;
+	if (SectionName == ".nocache")  return 1;
 	if (SectionName == ".cache")    return 2;
-	if (SectionName == ".resident") return 1;
+	if (SectionName == ".resident") return 3;
 	if (SectionName == ".sound")    return 4;
 }
 
