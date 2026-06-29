@@ -10,8 +10,6 @@ Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wi
 </br>
 <img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/31de4a99-401f-4ba4-aa0e-7696393502a9" />
 
-
-
 # Known Issues
 Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
 * Due to how the game work, Sending a `LoadRequest` while a FMV is playing, will freeze the game thread.
@@ -37,3 +35,4 @@ Simply open the folder, head to the cmake target and right click on the project 
 [cli11](https://github.com/cliutils/cli11)</br>
 [Detours](https://github.com/microsoft/Detours)</br>
 [vcpkg](https://github.com/microsoft/vcpkg/)
+[wwise](https://www.audiokinetic.com/)
