@@ -14,8 +14,6 @@ Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wi
 
 # Known Issues
 Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
-* Due to Denuvo, one last patch is missing to allow to play with a decrypted STAGE.DAT for the full version.
-* Building a new STAGE.DAT will render the game unable to play many Audio/Music since they wrapped the .sdx (Sound Pak) around wWise audio banks, unless i find a workaround.
 * Due to how the game work, Sending a `LoadRequest` while a FMV is playing, will freeze the game thread.
 
 ### Roadmap
