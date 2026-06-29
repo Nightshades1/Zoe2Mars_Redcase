@@ -4,8 +4,13 @@ Zoe2Mars_Redcase is an attempt to allow researcher to reverse engine the PS2 / P
 
 Many Assets names were recovered back from their hash due to leftover in the .bin files, especially the short stage name used by the development,Their meaning properly written in the mod panel :)</br></br>
 Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wiki) for all informations.</br>
-<img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/be70beec-7382-49d9-aa77-2281bb426323" /></br>
-<img width="1026" height="608" alt="image" src="https://github.com/user-attachments/assets/e2bb6b23-2b88-481f-af31-64e2838e3683" />
+<img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/74d203c9-8c24-4d0c-a37b-05b409f49707" />
+</br>
+<img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/f247c62a-7092-4743-9caa-3252773e3752" />
+</br>
+<img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/31de4a99-401f-4ba4-aa0e-7696393502a9" />
+
+
 
 # Known Issues
 Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
@@ -18,15 +23,14 @@ Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use th
 - [x] Cygames Packages hook, Extraction/Overrides, Allowing modding.
 - [x] In-Game mod panel with a ZOE2 Theme.
 - [x] CreateFileA Hook allowing targeted modification for files in the STAGE.DAT while the game run, mostly for analysis purpose.
-- [ ] Fix Wwise Audio issue for both Demo/Full version.
-- [ ] Add Renderdoc injection for the game.
-- [ ] Patches to play with a decrypted STAGE.DAT.
-- [x] Demo Version Patches to play with a decrypted STAGE.DAT.
+- [x] Fix Wwise Audio issue.
+- [x] Add Renderdoc injection for the game.
+- [x] Patches to play with a decrypted STAGE.DAT.
+- [ ] Custom wwise events override (custom bank support)
 
 # Building the source
-Visual Studio 2026 with C++ 20, vcpkg manifest will be used to download the dependencies when you build.</br>
-Solution Configuration marked with (Demo) will only build the mod with the "Demo Version" offsets.</br>
-Files built will be output in `Zoe2Mars_Redcase\x64\Release or Debug\Bin`.
+Visual Studio 2026 with C++ 20 and cmake, vcpkg manifest will be used to download the dependencies when you build.</br>
+Simply open the folder, head to the cmake target and right click on the project then "install" once built everything will be inside the `out/install/<x64 Release|x64 Debug>/`
 
 ### Special Thanks
 [@Surihix](https://github.com/Surihix) For feedback about the "ZOE2" Theme made for the Mod Panel.</br>
