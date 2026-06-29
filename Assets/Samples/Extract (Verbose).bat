@@ -1,0 +1,1 @@
+StageDec.exe -v stage -e -p "../../ZOE2/backup/STAGE.DAT" > ExtractLog.txt
