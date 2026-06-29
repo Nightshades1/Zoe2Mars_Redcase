@@ -34,5 +34,5 @@ Simply open the folder, head to the cmake target and right click on the project 
 [imgui](https://github.com/ocornut/imgui)</br>
 [cli11](https://github.com/cliutils/cli11)</br>
 [Detours](https://github.com/microsoft/Detours)</br>
-[vcpkg](https://github.com/microsoft/vcpkg/)
+[vcpkg](https://github.com/microsoft/vcpkg/)</br>
 [wwise](https://www.audiokinetic.com/)
