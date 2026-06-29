@@ -11,7 +11,7 @@ Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wi
 <img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/31de4a99-401f-4ba4-aa0e-7696393502a9" />
 
 # Known Issues
-Note: The PS2 version(s) have no issues, ZOE2 PS2 SpecialEdition and Mars use the same STAGE.DAT.</br>
+* Due to how the game work, To load a "stage" properly with the correct audio, you must go to the main menu then go in "new game" or "load game" then you can freely load a stage using the mod Panel, A bit like how the "Load Screen" work ... Otherwise the garbage implementation of the PS2 Audio Logic will forcefully refuse to load the soundtrack properly,Alternatively you can intentionally "loose" and reach the gameover screen, selecting continue will reset the audio system and initialize the track of the stage, This issue affect all ZOE2 Version and on any platform. (most likely the crap scripting system .scx that does that).
 * Due to how the game work, Sending a `LoadRequest` while a FMV is playing, will freeze the game thread.
 
 ### Roadmap
