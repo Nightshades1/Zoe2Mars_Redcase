@@ -74,4 +74,4 @@ endif()
 install(FILES "${CMAKE_SOURCE_DIR}/Assets/mod_zoe1.bnk" DESTINATION "./sound/Windows/English(US)")
 
 # The mod assets
-install(FILES "ModAssets/arial.ttf" DESTINATION "ModAssets")
+install(FILES ${ZOE2_MARS_REDCASE_MOD_ASSETS} DESTINATION "ModAssets")
