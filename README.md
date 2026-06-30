@@ -3,7 +3,8 @@
 Zoe2Mars_Redcase is an attempt to allow researcher to reverse engine the PS2 / PC Mars version while providing an in-game mod panel for the PC version with a bunch of features such as extracting/overriding cygames files, allowing modding to some extent.</br>
 
 Many Assets names were recovered back from their hash due to leftover in the .bin files, especially the short stage name used by the development,Their meaning properly written in the mod panel :)</br></br>
-Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wiki/Setting-up-Zoe2-Mars) for all informations.</br>
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Nightshades1/Zoe2Mars_Redcase) or
+Head over the [Redcase Wiki](https://github.com/Nightshades1/Zoe2Mars_Redcase/wiki/Setting-up-Zoe2-Mars).</br>
 <img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/74d203c9-8c24-4d0c-a37b-05b409f49707" />
 </br>
 <img width="90%" height="90%" alt="image" src="https://github.com/user-attachments/assets/f247c62a-7092-4743-9caa-3252773e3752" />
